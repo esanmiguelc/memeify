@@ -1,0 +1,14 @@
+{
+  "name": "memeify",
+  "version": "0.0.1",
+  "description": "A tool that leverages HTML5 Canvas to caption images.",
+  "main": "memeify.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "meme"
+  ],
+  "author": "Emmanuel San Miguel",
+  "license": "MIT"
+}
