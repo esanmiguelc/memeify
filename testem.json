@@ -2,6 +2,7 @@
   "framework": "jasmine2",
   "src_files": [
     "src/memeify.js",
+    "test/fakeContext.js",
     "test/fakeCanvas.js",
     "test/memeifySpec.js"
   ]
