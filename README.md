@@ -4,8 +4,14 @@
 
 ### For Development
 
-clone the repository
+Clone the repository: `git@github.com:esanmiguelc/memeify.git`
+
+cd into it: `cd memeify`
+
+Install dependencies with [npm](www.npm.org): `npm install`
 
 #### To run the tests
 
     testem ci
+    
+If you want to see the specs you can run `testem` and open up a browser on the specified address
