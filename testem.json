@@ -1,6 +1,7 @@
 {
   "framework": "jasmine2",
   "src_files": [
+    "src/contextWrapper.js",
     "src/memeify.js",
     "test/fakeContext.js",
     "test/fakeCanvas.js",

@@ -16,5 +16,7 @@ FakeContext = (function() {
     this.widthResults = results;
   };
 
+  FakeContext.prototype.setFont = function() {};
+
   return FakeContext;
 })();

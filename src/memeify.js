@@ -2,66 +2,80 @@ var Memeify;
 
 Memeify = (function() {
 
-  function Memeify() {}
+  var context;
 
-  Memeify.createMeme = function(image, canvas, topText, bottomText) {
-    var context = canvas.getContext('2d');
+  function Memeify(context) {
+    this.context = context;
+  }
+
+  Memeify.prototype.createMeme = function(image, canvas, topText, bottomText) {
     var maxWidth = (canvas.width * 0.90);
-    context.drawImage(image, 0, 0);
+    this.context.setFont(48, 'sans-serif');
+    this.context.drawImage(image, 0, 0);
 
-    _fitText(canvas, context, topText, maxWidth);
-  };
+    this._fitText(canvas, this.context, topText, maxWidth);
+  }
 
-  Memeify.calculateFontSize = function(context, text, options) {
+  Memeify.prototype.calculateFontSize = function(text, options) {
     var initialSize = options.initialFontSize;
-    while (context.getTextWidth(text) > options.maxWidth) {
+    while (this.context.getTextWidth(text) > options.maxWidth) {
       if (initialSize == options.minFontSize) {
         break;
       }
       initialSize -= 2;
+      this.context.setFont(initialSize, "sans-serif");
     }
     return initialSize;
   };
 
-  var _fitText = function (canvas, context, text, maxWidth) {
-    var fontSize = 48;
-    context.font = fontSize + "px sans-serif";
+  Memeify.prototype.splitLines = function(text, maxWidth) {
+    var result = [];
     var words = text.split(' ');
     var line = '';
-    var y = 10;
-
-    var textWidth = context.measureText(text).width;
-    while (textWidth > maxWidth) {
-      if (fontSize == 16) {
-        break;
+    for(i = 0; i < words.length; i++) {
+      var currentWord = words[i];
+      width = this.context.getTextWidth(line + " " + currentWord);
+      if (width < maxWidth) {
+        line += currentWord +  " ";
+      } else {
+        this._pushSplitLine(result,line);
+        line = currentWord;
       }
-      fontSize -= 2;
-      context.font = fontSize + "px sans-serif";
-      textWidth = context.measureText(text).width;
     }
+    this._pushSplitLine(result, line);
+    return result;
+  };
 
-    if (textWidth < maxWidth) {
-      _renderText(canvas, context, text, y + fontSize);
-    } else {
-      for (var i = 0; i < words.length; i++) {
-        var testLine = line + words[i] + ' ';
-        var metrics = context.measureText(testLine);
-        var testWidth = metrics.width;
-        if (testWidth > maxWidth && i > 0) {
-          _renderText(canvas, context, line, y);
-          line = words[i] + ' ';
-          y += (fontSize + 5);
-        } else {
-          line = testLine;
-        }
-      }
-      _renderText(canvas, context, line, y);
+  Memeify.prototype._pushSplitLine = function(result, line) {
+    if (line != "") {
+      result.push(line.trim());
     }
   };
 
+  Memeify.prototype._fitText = function (canvas, context, text, maxWidth) {
+
+    options = {
+      'minFontSize': 16,
+      'initialFontSize': 48,
+      'maxWidth': maxWidth
+    };
+    var fontSize = this.calculateFontSize(text, options);
+    context.font = fontSize + "px sans-serif";
+
+    var split = this.splitLines(text, maxWidth);
+    for (i = 0; i < split.length; i++) {
+      var currentRow = split[i];
+      if (i == 0) {
+        _renderText(canvas, this.context, currentRow, fontSize);
+      } else {
+        _renderText(canvas, this.context, currentRow, fontSize + fontSize);
+      }
+    };
+  };
+
   var _renderText = function (canvas, context, line, y) {
-      var center = ((canvas.width - context.measureText(line).width) / 2);
-      context.fillText(line, center, y);
+      var center = ((canvas.width - context.getTextWidth(line)) / 2);
+      context.drawText(line, center, y);
   };
 
   return Memeify;
