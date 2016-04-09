@@ -1,3 +1,4 @@
+'use strict';
 var Memeify;
 
 Memeify = (function() {
@@ -32,9 +33,9 @@ Memeify = (function() {
     var result = [];
     var words = text.split(' ');
     var line = '';
-    for(i = 0; i < words.length; i++) {
+    for(var i = 0; i < words.length; i++) {
       var currentWord = words[i];
-      width = this.context.getTextWidth(line + " " + currentWord);
+      var width = this.context.getTextWidth(line + " " + currentWord);
       if (width < maxWidth) {
         line += currentWord +  " ";
       } else {
@@ -53,8 +54,7 @@ Memeify = (function() {
   };
 
   Memeify.prototype._fitText = function (canvas, text, maxWidth) {
-
-    options = {
+    var options = {
       'minFontSize': 16,
       'initialFontSize': 48,
       'maxWidth': maxWidth
@@ -63,7 +63,8 @@ Memeify = (function() {
     this.context.setFont(fontSize, 'sans-serif');
 
     var split = this.splitLines(text, maxWidth);
-    for (i = 0; i < split.length; i++) {
+
+    for (var i = 0; i < split.length; i++) {
       var currentRow = split[i];
       if (i == 0) {
         _renderText(canvas, this.context, currentRow, fontSize);
@@ -71,6 +72,18 @@ Memeify = (function() {
         _renderText(canvas, this.context, currentRow, fontSize + fontSize);
       }
     };
+  };
+
+  Memeify.prototype.placeText = function(rows, fontSize, width) {
+    for (var i = 0; i < rows.length; i++) {
+      var currentRow = rows[i];
+      var center = ((width - this.context.getTextWidth(currentRow)) / 2);
+      if (i == 0) {
+        this.context.drawText(currentRow, center, fontSize);
+      } else {
+        this.context.drawText(currentRow, center, (fontSize * (i + 1)));
+      }
+    }
   };
 
   var _renderText = function (canvas, context, line, y) {

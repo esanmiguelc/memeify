@@ -1,3 +1,4 @@
+'use strict';
 describe("Memeify", function() {
 
   var canvas;
@@ -14,6 +15,7 @@ describe("Memeify", function() {
 
   describe("#createMeme", function() {
     var memeify;
+    var wrapper;
 
     beforeEach(function() {
       wrapper = new ContextWrapper(context);
@@ -96,6 +98,64 @@ describe("Memeify", function() {
       var result = memeify.splitLines("super long text", 100);
 
       expect(result).toEqual(["super long", "text"]);
+    });
+  });
+
+  describe("#placeText", function() {
+    var context;
+    var memeify;
+
+    beforeEach(function() {
+      context = new FakeContext();
+      memeify = new Memeify(context);
+    });
+
+    it("places the first row in the correct position", function() {
+      var rows = ['hello']
+      var fontSize = 32;
+
+      context.setTextWidthResults([50]);
+      memeify.placeText(rows, fontSize, 100);
+
+      var firstArguments = {
+        'fontSize': fontSize,
+        'center': 25,
+        'line': rows[0]
+      };
+
+      expect(context.drawTextCalls[0]).toEqual(firstArguments);
+    });
+
+    it("places the second row directly below the first one", function() {
+      var rows = ['hello', 'world']
+      var fontSize = 32;
+
+      context.setTextWidthResults([50, 50]);
+      memeify.placeText(rows, fontSize, 100);
+
+      var secondArguments = {
+        'fontSize': fontSize + fontSize,
+        'center': 25,
+        'line': rows[1]
+      };
+
+      expect(context.drawTextCalls[1]).toEqual(secondArguments);
+    });
+
+    it("places the third row directly below the second one", function() {
+      var rows = ['hello', 'world', 'third']
+      var fontSize = 32;
+
+      context.setTextWidthResults([50, 50, 50]);
+      memeify.placeText(rows, fontSize, 100);
+
+      var thirdArguments = {
+        'fontSize': fontSize * 3,
+        'center': 25,
+        'line': rows[2]
+      };
+
+      expect(context.drawTextCalls[2]).toEqual(thirdArguments);
     });
   });
 

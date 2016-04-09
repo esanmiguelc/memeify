@@ -1,3 +1,4 @@
+'use strict';
 var FakeCanvas;
 
 FakeCanvas = (function() {
