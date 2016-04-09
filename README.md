@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/esanmiguelc/memeify.svg?branch=master)](https://travis-ci.org/esanmiguelc/memeify)
+
 ## Memeify
 
 ### How to Use
