@@ -13,7 +13,7 @@ Memeify = (function() {
     this.context.setFont(48, 'sans-serif');
     this.context.drawImage(image, 0, 0);
 
-    this._fitText(canvas, this.context, topText, maxWidth);
+    this._fitText(canvas, topText, maxWidth);
   }
 
   Memeify.prototype.calculateFontSize = function(text, options) {
@@ -52,7 +52,7 @@ Memeify = (function() {
     }
   };
 
-  Memeify.prototype._fitText = function (canvas, context, text, maxWidth) {
+  Memeify.prototype._fitText = function (canvas, text, maxWidth) {
 
     options = {
       'minFontSize': 16,
@@ -60,7 +60,7 @@ Memeify = (function() {
       'maxWidth': maxWidth
     };
     var fontSize = this.calculateFontSize(text, options);
-    context.font = fontSize + "px sans-serif";
+    this.context.setFont(fontSize, 'sans-serif');
 
     var split = this.splitLines(text, maxWidth);
     for (i = 0; i < split.length; i++) {

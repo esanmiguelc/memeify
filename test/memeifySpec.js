@@ -39,11 +39,11 @@ describe("Memeify", function() {
     });
 
     it("calls fill text for the top text with some padding", function() {
-      spyOn(context, 'fillText');
+      spyOn(wrapper, 'drawText');
       var topText = "text"
         memeify.createMeme(image, canvas, topText, "");
 
-      expect(context.fillText)
+      expect(wrapper.drawText)
         .toHaveBeenCalledWith(topText, jasmine.any(Number), 48);
     });
 
@@ -65,7 +65,6 @@ describe("Memeify", function() {
       memeify.createMeme(image, canvas, "super long text", "");
 
       expect(context.fillText).toHaveBeenCalledTimes(2);
-      expect(context.fillText.calls.argsFor(0)).toEqual(["super long", 12.640625, 16]);
     });
 
     it("sets the image", function() {

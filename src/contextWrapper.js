@@ -25,7 +25,9 @@ ContextWrapper = (function() {
     this.context.fillText(text, x, y);
   };
 
-  ContextWrapper.prototype.drawImage = function(image, x, y) {
+  ContextWrapper.prototype.drawImage = function(imagePath, x, y) {
+    var image = new Image();
+    image.src = image;
     this.context.drawImage(image, x, y);
   };
 
