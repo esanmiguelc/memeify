@@ -6,7 +6,7 @@ FakeContext = (function() {
   FakeContext = function () {
     this.widthResults = [];
     this.drawTextCalls = [];
-  }
+  };
 
   FakeContext.prototype.getTextWidth = function(text) {
     return this.widthResults.shift();

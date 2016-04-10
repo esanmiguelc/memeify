@@ -42,7 +42,7 @@ describe("Memeify", function () {
 
         it("calls fill text for the top text with some padding", function () {
             spyOn(wrapper, 'drawText');
-            var topText = "text"
+            var topText = "text";
             memeify.createMeme(image, canvas, topText, "");
 
             expect(wrapper.drawText)
@@ -110,7 +110,7 @@ describe("Memeify", function () {
         });
 
         it("places the first row in the correct position", function () {
-            var rows = ['hello']
+            var rows = ['hello'];
             var fontSize = 32;
 
             context.setTextWidthResults([50]);
@@ -142,7 +142,7 @@ describe("Memeify", function () {
         });
 
         it("places the third row directly below the second one", function () {
-            var rows = ['hello', 'world', 'third']
+            var rows = ['hello', 'world', 'third'];
             var fontSize = 32;
 
             context.setTextWidthResults([50, 50, 50]);
@@ -168,7 +168,7 @@ describe("Memeify", function () {
         });
 
         it("places one line on the bottom", function () {
-            var rows = ['hello']
+            var rows = ['hello'];
             var fontSize = 32;
 
             context.setTextWidthResults([50]);
@@ -185,7 +185,7 @@ describe("Memeify", function () {
         });
 
         it("places last line first", function () {
-            var rows = ['hello', 'world']
+            var rows = ['hello', 'world'];
             var fontSize = 32;
 
             context.setTextWidthResults([50]);
@@ -201,7 +201,7 @@ describe("Memeify", function () {
         });
 
         it("places second line before of the first one", function () {
-            var rows = ['hello', 'world', 'test']
+            var rows = ['hello', 'world', 'test'];
             var fontSize = 32;
 
             context.setTextWidthResults([50, 50, 50]);

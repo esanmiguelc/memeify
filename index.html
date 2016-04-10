@@ -1,7 +1,7 @@
 <html>
     <body>
 
-        <canvas width="500" height="500">
+        <canvas width="500" height="500" id="canvas">
 
         </canvas>
 
@@ -9,7 +9,7 @@
         <script>
             "use strict";
 
-            new Memeify();
+            new Memeify(document.getElementById("canvas"));
         </script>
     </body>
 </html>

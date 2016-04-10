@@ -5,8 +5,7 @@ ContextWrapper = (function() {
 
   function ContextWrapper(context) {
     this.context = context;
-  };
-
+  }
   ContextWrapper.prototype.getTextWidth = function (text) {
     return this.context.measureText(text).width
   };
