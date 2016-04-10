@@ -70,7 +70,7 @@ Memeify = (function() {
   Memeify.prototype.placeText = function(rows, fontSize, width) {
     for (var i = 0; i < rows.length; i++) {
       var currentRow = rows[i];
-      var center = ((width - this.context.getTextWidth(currentRow)) / 2);
+      var center = this.getCenter(width, currentRow);
       if (i == 0) {
         this.context.drawText(currentRow, center, fontSize);
       } else {
@@ -83,7 +83,7 @@ Memeify = (function() {
     var count = 0;
     for(var i = rows.length; i > 0; i--) {
       var currentRow = rows[i - 1];
-      var center = ((width - this.context.getTextWidth(currentRow)) / 2);
+      var center = this.getCenter(width, currentRow);
       if (count == 0) {
         this.context.drawText(currentRow, center, height - fontSize);
       } else {
@@ -91,6 +91,10 @@ Memeify = (function() {
       }
       count += 1;
     }
+  };
+
+  Memeify.prototype.getCenter = function(width, text) {
+    return ((width - this.context.getTextWidth(text)) / 2);
   };
 
   return Memeify;

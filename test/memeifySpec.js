@@ -219,6 +219,20 @@ describe("Memeify", function() {
     });
   });
 
+  describe("#getCenter", function() {
+    it("gets the center of a text", function() {
+    var context = new FakeContext();
+    var memeify = new Memeify(context);
+    var width = 100;
+    var text = 'some';
+
+    context.setTextWidthResults([50]);
+    var result = memeify.getCenter(width, text);
+
+    expect(result).toEqual(25);
+    });
+  });
+
   describe("#calculateFontSize", function() {
     var context;
     var memeify;
