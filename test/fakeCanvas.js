@@ -9,9 +9,9 @@ FakeCanvas = (function() {
     this.font = "";
   }
 
-  FakeCanvas.prototype.getContext = function(string) {
+  FakeCanvas.prototype.getContext = function(_) {
     return this;
-  }
+  };
 
   return FakeCanvas;
 })();

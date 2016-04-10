@@ -3,9 +3,6 @@ var FakeContext;
 
 FakeContext = (function() {
 
-  var widthResults;
-  var drawTextCalls;
-
   FakeContext = function () {
     this.widthResults = [];
     this.drawTextCalls = [];

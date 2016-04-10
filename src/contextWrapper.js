@@ -3,8 +3,6 @@ var ContextWrapper;
 
 ContextWrapper = (function() {
 
-  var context;
-
   function ContextWrapper(context) {
     this.context = context;
   };

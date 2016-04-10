@@ -3,9 +3,7 @@ var Memeify;
 
 Memeify = (function() {
 
-  var context;
-
-  function Memeify(context) {
+    function Memeify(context) {
     this.context = context;
   }
 
