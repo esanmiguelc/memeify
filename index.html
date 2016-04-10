@@ -2,8 +2,12 @@
 <body>
 
 <canvas width="300" height="300" id="canvas">
-
 </canvas>
+
+<input type="text" id="topText" placeholder="Top Text">
+<input type="text" id="bottomText" placeholder="Bottom Text">
+<input type="button" id="save" value="save">
+
 <script src="src/contextWrapper.js"></script>
 <script src="src/memeify.js"></script>
 <script>
@@ -13,10 +17,20 @@
     image.src = 'https://cdn.meme.am/images/300x/3291562.jpg';
     image.onload = function () {
         var canvas = document.getElementById("canvas");
+        var topText = document.getElementById("topText");
+        var bottomText = document.getElementById("bottomText");
         var memeify = Memeify.newInstance(canvas);
-        var topText = 'hello there here is something that you can think about';
-        var bottomText = 'super long world blah dug world this is the second line opportunity somea';
-        memeify.createMeme(image, canvas, topText, bottomText);
+        memeify.createMeme(image, canvas, topText.value, bottomText.value);
+        [topText, bottomText].forEach(function (element) {
+            element.onkeyup = function () {
+                memeify.createMeme(image, canvas, topText.value, bottomText.value);
+            }
+        });
+    };
+
+    var save = document.getElementById('save');
+    save.onclick = function() {
+        canvas.toDataURL("image/jpeg", 1.0);
     };
 </script>
 </body>

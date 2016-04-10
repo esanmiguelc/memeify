@@ -242,6 +242,16 @@ describe('Memeify', function () {
         });
     });
 
+    describe('#exportToJpeg', function () {
+        it('calls data URL', function () {
+            var canvas = jasmine.createSpyObj('canvas', ['getContext', 'toDataURL']);
+            var memeify = new Memeify(null, canvas);
+            memeify.exportToJpeg(1.0);
+            expect(canvas.toDataURL).toHaveBeenCalled();
+            expect(canvas.toDataURL).toHaveBeenCalledWith("image/jpeg", 1.0);
+        });
+    });
+
     describe('#calculateFontSize', function () {
         var context;
         var memeify;

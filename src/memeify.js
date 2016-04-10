@@ -3,8 +3,9 @@ var Memeify;
 
 Memeify = (function () {
 
-    function Memeify(context) {
+    function Memeify(context, canvas) {
         this.context = context;
+        this.canvas = canvas;
     }
 
     Memeify.newInstance = function (canvas) {
@@ -101,6 +102,10 @@ Memeify = (function () {
 
     Memeify.prototype.getCenter = function (width, text) {
         return ((width - this.context.getTextWidth(text)) / 2);
+    };
+
+    Memeify.prototype.exportToJpeg = function (quality) {
+        return this.canvas.toDataURL('image/jpeg', quality);
     };
 
     return Memeify;
