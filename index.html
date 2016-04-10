@@ -1,15 +1,23 @@
 <html>
-    <body>
+<body>
 
-        <canvas width="500" height="500" id="canvas">
+<canvas width="300" height="300" id="canvas">
 
-        </canvas>
+</canvas>
+<script src="src/contextWrapper.js"></script>
+<script src="src/memeify.js"></script>
+<script>
+    "use strict";
 
-        <script src="src/memeify.js"></script>
-        <script>
-            "use strict";
-
-            new Memeify(document.getElementById("canvas"));
-        </script>
-    </body>
+    var image = new Image();
+    image.src = 'https://cdn.meme.am/images/300x/3291562.jpg';
+    image.onload = function () {
+        var canvas = document.getElementById("canvas");
+        var memeify = Memeify.newInstance(canvas);
+        var topText = 'hello there here is something that you can think about';
+        var bottomText = 'super long world blah dug world this is the second line opportunity somea';
+        memeify.createMeme(image, canvas, topText, bottomText);
+    };
+</script>
+</body>
 </html>

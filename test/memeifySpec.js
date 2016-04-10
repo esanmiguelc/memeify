@@ -1,5 +1,5 @@
 'use strict';
-describe("Memeify", function () {
+describe('Memeify', function () {
 
     var canvas;
     var context;
@@ -9,98 +9,107 @@ describe("Memeify", function () {
         canvas = document.createElement('canvas');
         context = canvas.getContext('2d');
         image = new Image();
+        image.src = 'sample.jpg';
         canvas.width = 100;
         canvas.height = 100;
     });
 
-    describe("#createMeme", function () {
+    describe('#createMeme', function () {
         var memeify;
         var wrapper;
 
         beforeEach(function () {
             wrapper = new ContextWrapper(context);
             memeify = new Memeify(wrapper);
+            wrapper.setFont(48, 'sans-serif');
         });
 
-        it("sets the font size and style", function () {
-            memeify.createMeme(image, canvas, "", "");
+        it('sets the font size and style', function () {
+            memeify.createMeme(image, canvas, '', '');
 
-            expect(wrapper.getFont()).toBe("48px sans-serif");
+            expect(wrapper.getFont()).toBe('48px sans-serif');
+        });
+        
+        it('draws text from top and bottom', function () {
+            spyOn(context, 'fillText');
+            memeify.createMeme(image, canvas, 'a', 'b');
+
+            expect(context.fillText).toHaveBeenCalledTimes(2);
         });
 
-        it("resizes the font if text is too big", function () {
-            memeify.createMeme(image, canvas, "hellii", "");
+        it('re-sizes the font if text is too big', function () {
+            memeify._fitText(canvas, 'hellii', 90, true);
 
-            expect(wrapper.getFont()).toBe("44px sans-serif")
+            expect(wrapper.getFont()).toBe('44px sans-serif')
         });
 
-        it("only resizes up to 16px", function () {
-            memeify.createMeme(image, canvas, "super long text", "");
+        it('only re-sizes up to 16px', function () {
+            memeify._fitText(canvas, 'super long text', '');
 
-            expect(wrapper.getFont()).toBe("16px sans-serif")
+            expect(wrapper.getFont()).toBe('16px sans-serif')
         });
 
-        it("calls fill text for the top text with some padding", function () {
+        it('calls fill text for the top text with some padding', function () {
             spyOn(wrapper, 'drawText');
             var topText = "text";
-            memeify.createMeme(image, canvas, topText, "");
+            memeify.createMeme(image, canvas, topText, '');
 
             expect(wrapper.drawText)
                 .toHaveBeenCalledWith(topText, jasmine.any(Number), 48);
         });
 
-        it("centers the text", function () {
+        it('centers the text', function () {
             spyOn(context, 'fillText');
-            var fakeMeasure = jasmine.createSpy("context");
+            var fakeMeasure = jasmine.createSpy('context');
             spyOn(context, 'measureText').and.returnValue(fakeMeasure);
             fakeMeasure.width = 50;
             var topText = "text";
 
-            memeify.createMeme(image, canvas, topText, "");
+            memeify.createMeme(image, canvas, topText, '');
 
             expect(context.fillText).toHaveBeenCalledWith(topText, 25, jasmine.any(Number));
         });
 
-        it("splits into multiple lines", function () {
+        it('splits into multiple lines', function () {
             spyOn(context, 'fillText');
-            memeify.createMeme(image, canvas, "super long text", "");
+            memeify._fitText(canvas, 'super long text', 90);
 
             expect(context.fillText).toHaveBeenCalledTimes(2);
         });
 
-        it("sets the image", function () {
+        it('sets the image', function () {
             spyOn(context, 'drawImage');
 
-            memeify.createMeme(image, canvas, "", "");
+            memeify.createMeme(image, canvas, '', '');
 
             expect(context.drawImage).toHaveBeenCalledWith(jasmine.any(Image), 0, 0);
         });
     });
 
-    describe("#splitLines", function () {
-
-        it("keeps it in one line if it fits in one line", function () {
+    describe('#splitLines', function () {
+        
+        it('keeps it in one line if it fits in one line', function () {
             var context = new FakeContext();
             var memeify = new Memeify(context);
 
             context.setTextWidthResults([50, 60]);
-            var result = memeify.splitLines("long text", 100);
+            var result = memeify.splitLines('long text', 100);
 
-            expect(result).toEqual(["long text"]);
+            expect(result).toEqual(['long text']);
         });
 
-        it("splits the line if its too long", function () {
+        it('splits the line if its too long', function () {
             var context = new FakeContext();
             var memeify = new Memeify(context);
 
             context.setTextWidthResults([10, 15, 101]);
-            var result = memeify.splitLines("super long text", 100);
+            var result = memeify.splitLines('super long text', 100);
 
-            expect(result).toEqual(["super long", "text"]);
+            expect(result).toEqual(['super long', 'text']);
         });
     });
 
-    describe("#placeText", function () {
+    describe('#placeText', function () {
         var context;
         var memeify;
 
@@ -109,7 +118,7 @@ describe("Memeify", function () {
             memeify = new Memeify(context);
         });
 
-        it("places the first row in the correct position", function () {
+        it('places the first row in the correct position', function () {
             var rows = ['hello'];
             var fontSize = 32;
 
@@ -125,7 +134,7 @@ describe("Memeify", function () {
             expect(context.drawTextCalls[0]).toEqual(firstArguments);
         });
 
-        it("places the second row directly below the first one", function () {
+        it('places the second row directly below the first one', function () {
             var rows = ['hello', 'world'];
             var fontSize = 32;
 
@@ -141,7 +150,7 @@ describe("Memeify", function () {
             expect(context.drawTextCalls[1]).toEqual(secondArguments);
         });
 
-        it("places the third row directly below the second one", function () {
+        it('places the third row directly below the second one', function () {
             var rows = ['hello', 'world', 'third'];
             var fontSize = 32;
 
@@ -158,7 +167,7 @@ describe("Memeify", function () {
         });
     });
 
-    describe("#placeBottomText", function () {
+    describe('#placeBottomText', function () {
         var context;
         var memeify;
 
@@ -167,7 +176,7 @@ describe("Memeify", function () {
             memeify = new Memeify(context);
         });
 
-        it("places one line on the bottom", function () {
+        it('places one line on the bottom', function () {
             var rows = ['hello'];
             var fontSize = 32;
 
@@ -180,11 +189,11 @@ describe("Memeify", function () {
                 'line': rows[0]
             };
 
-            console.log(context);
-            expect(context.drawTextCalls[0]).toEqual(firstArguments);
+            var firstCall = context.drawTextCalls[0];
+            expect(firstCall).toEqual(firstArguments);
         });
 
-        it("places last line first", function () {
+        it('places last line first', function () {
             var rows = ['hello', 'world'];
             var fontSize = 32;
 
@@ -197,10 +206,11 @@ describe("Memeify", function () {
                 'line': rows[1]
             };
 
-            expect(context.drawTextCalls[0]).toEqual(secondArguments);
+            var firstCall = context.drawTextCalls[0];
+            expect(firstCall).toEqual(secondArguments);
         });
 
-        it("places second line before of the first one", function () {
+        it('places second line before of the first one', function () {
             var rows = ['hello', 'world', 'test'];
             var fontSize = 32;
 
@@ -208,17 +218,18 @@ describe("Memeify", function () {
             memeify.placeBottomText(rows, fontSize, 100, 100);
 
             var firstArguments = {
-                'fontSize': 100 - fontSize * 2,
+                'fontSize': 100 - fontSize * 3,
                 'center': 25,
                 'line': rows[0]
             };
 
-            expect(context.drawTextCalls[2]).toEqual(firstArguments);
+            var thirdCall = context.drawTextCalls[2];
+            expect(thirdCall).toEqual(firstArguments);
         });
     });
 
-    describe("#getCenter", function () {
-        it("gets the center of a text", function () {
+    describe('#getCenter', function () {
+        it('gets the center of a text', function () {
             var context = new FakeContext();
             var memeify = new Memeify(context);
             var width = 100;
@@ -231,7 +242,7 @@ describe("Memeify", function () {
         });
     });
 
-    describe("#calculateFontSize", function () {
+    describe('#calculateFontSize', function () {
         var context;
         var memeify;
 
@@ -240,7 +251,7 @@ describe("Memeify", function () {
             memeify = new Memeify(context);
         });
 
-        it("maintains the font size when it fits", function () {
+        it('maintains the font size when it fits', function () {
             var text = 'test';
             var options = {
                 'minFontSize': 16,
@@ -252,7 +263,7 @@ describe("Memeify", function () {
             expect(fontSize).toBe(48);
         });
 
-        it("reduces the font size when it is too big", function () {
+        it('reduces the font size when it is too big', function () {
             context.setTextWidthResults([101, 100]);
             var text = 'hello';
             var options = {
@@ -266,7 +277,7 @@ describe("Memeify", function () {
             expect(fontSize).toBe(46);
         });
 
-        it("reduces the font size multiple times until it reaches lowest size", function () {
+        it('reduces the font size multiple times until it reaches lowest size', function () {
             context.setTextWidthResults([102, 101]);
             var text = 'hello';
             var options = {

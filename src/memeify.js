@@ -7,15 +7,23 @@ Memeify = (function () {
         this.context = context;
     }
 
+    Memeify.newInstance = function (canvas) {
+        this.canvas = canvas;
+        this.context = new ContextWrapper(canvas.getContext('2d'));
+        return new Memeify(this.context);
+    };
+
     Memeify.prototype.createMeme = function (image, canvas, topText, bottomText) {
         var maxWidth = (canvas.width * 0.90);
         this.context.setFont(48, 'sans-serif');
+        this.context.setFontColor("white");
         this.context.drawImage(image, 0, 0);
 
-        this._fitText(canvas, topText, maxWidth);
+        this._fitText(canvas, topText, maxWidth, true);
+        this._fitText(canvas, bottomText, maxWidth, false);
     };
 
-    Memeify.prototype._fitText = function (canvas, text, maxWidth) {
+    Memeify.prototype._fitText = function (canvas, text, maxWidth, isTop) {
         var options = {
             'minFontSize': 16,
             'initialFontSize': 48,
@@ -26,7 +34,11 @@ Memeify = (function () {
 
         var split = this.splitLines(text, maxWidth);
 
-        this.placeText(split, fontSize, canvas.width);
+        if (isTop) {
+            this.placeText(split, fontSize, canvas.width);
+        } else {
+            this.placeBottomText(split, fontSize, canvas.width, canvas.height);
+        }
     };
 
     Memeify.prototype.calculateFontSize = function (text, options) {
@@ -78,15 +90,11 @@ Memeify = (function () {
     };
 
     Memeify.prototype.placeBottomText = function (rows, fontSize, width, height) {
-        var count = 0;
+        var count = 1;
         for (var i = rows.length; i > 0; i--) {
             var currentRow = rows[i - 1];
             var center = this.getCenter(width, currentRow);
-            if (count == 0) {
-                this.context.drawText(currentRow, center, height - fontSize);
-            } else {
-                this.context.drawText(currentRow, center, height - (fontSize * count));
-            }
+            this.context.drawText(currentRow, center, height - (fontSize * count));
             count += 1;
         }
     };
