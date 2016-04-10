@@ -159,6 +159,66 @@ describe("Memeify", function() {
     });
   });
 
+  describe("#placeBottomText", function() {
+    var context;
+    var memeify;
+
+    beforeEach(function() {
+      context = new FakeContext();
+      memeify = new Memeify(context);
+    });
+
+    it("places one line on the bottom", function() {
+      var rows = ['hello']
+      var fontSize = 32;
+
+      context.setTextWidthResults([50]);
+      memeify.placeBottomText(rows, fontSize, 100, 100);
+
+      var firstArguments = {
+        'fontSize': 100 - fontSize,
+        'center': 25,
+        'line': rows[0]
+      };
+
+      console.log(context);
+      expect(context.drawTextCalls[0]).toEqual(firstArguments);
+    });
+
+    it("places last line first", function() {
+      var rows = ['hello', 'world']
+      var fontSize = 32;
+
+      context.setTextWidthResults([50]);
+      memeify.placeBottomText(rows, fontSize, 100, 100);
+
+      var secondArguments = {
+        'fontSize': 100 - fontSize,
+        'center': 25,
+        'line': rows[1]
+      };
+
+      console.log(context);
+      expect(context.drawTextCalls[0]).toEqual(secondArguments);
+    });
+
+    it("places second line before of the first one", function() {
+      var rows = ['hello', 'world', 'test']
+      var fontSize = 32;
+
+      context.setTextWidthResults([50, 50, 50]);
+      memeify.placeBottomText(rows, fontSize, 100, 100);
+
+      var firstArguments = {
+        'fontSize': 100 - fontSize * 2,
+        'center': 25,
+        'line': rows[0]
+      };
+
+      expect(context.drawTextCalls[2]).toEqual(firstArguments);
+    });
+  });
+
   describe("#calculateFontSize", function() {
     var context;
     var memeify;

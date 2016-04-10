@@ -17,6 +17,20 @@ Memeify = (function() {
     this._fitText(canvas, topText, maxWidth);
   }
 
+  Memeify.prototype._fitText = function (canvas, text, maxWidth) {
+    var options = {
+      'minFontSize': 16,
+      'initialFontSize': 48,
+      'maxWidth': maxWidth
+    };
+    var fontSize = this.calculateFontSize(text, options);
+    this.context.setFont(fontSize, 'sans-serif');
+
+    var split = this.splitLines(text, maxWidth);
+
+    this.placeText(split, fontSize, canvas.width);
+  };
+
   Memeify.prototype.calculateFontSize = function(text, options) {
     var initialSize = options.initialFontSize;
     while (this.context.getTextWidth(text) > options.maxWidth) {
@@ -53,27 +67,6 @@ Memeify = (function() {
     }
   };
 
-  Memeify.prototype._fitText = function (canvas, text, maxWidth) {
-    var options = {
-      'minFontSize': 16,
-      'initialFontSize': 48,
-      'maxWidth': maxWidth
-    };
-    var fontSize = this.calculateFontSize(text, options);
-    this.context.setFont(fontSize, 'sans-serif');
-
-    var split = this.splitLines(text, maxWidth);
-
-    for (var i = 0; i < split.length; i++) {
-      var currentRow = split[i];
-      if (i == 0) {
-        _renderText(canvas, this.context, currentRow, fontSize);
-      } else {
-        _renderText(canvas, this.context, currentRow, fontSize + fontSize);
-      }
-    };
-  };
-
   Memeify.prototype.placeText = function(rows, fontSize, width) {
     for (var i = 0; i < rows.length; i++) {
       var currentRow = rows[i];
@@ -86,9 +79,18 @@ Memeify = (function() {
     }
   };
 
-  var _renderText = function (canvas, context, line, y) {
-      var center = ((canvas.width - context.getTextWidth(line)) / 2);
-      context.drawText(line, center, y);
+  Memeify.prototype.placeBottomText = function(rows, fontSize, width, height) {
+    var count = 0;
+    for(var i = rows.length; i > 0; i--) {
+      var currentRow = rows[i - 1];
+      var center = ((width - this.context.getTextWidth(currentRow)) / 2);
+      if (count == 0) {
+        this.context.drawText(currentRow, center, height - fontSize);
+      } else {
+        this.context.drawText(currentRow, center, height - (fontSize * count));
+      }
+      count += 1;
+    }
   };
 
   return Memeify;
