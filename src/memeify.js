@@ -60,12 +60,12 @@ Memeify = (function () {
         var line = '';
         for (var i = 0; i < words.length; i++) {
             var currentWord = words[i];
-            var width = this.context.getTextWidth(line + " " + currentWord);
+            var width = this.context.getTextWidth(line + ' ' + currentWord);
             if (width < maxWidth) {
-                line += currentWord + " ";
+                line += currentWord + ' ';
             } else {
                 this._pushSplitLine(result, line);
-                line = currentWord;
+                line = currentWord + ' ';
             }
         }
         this._pushSplitLine(result, line);

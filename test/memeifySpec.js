@@ -102,10 +102,10 @@ describe('Memeify', function () {
             var context = new FakeContext();
             var memeify = new Memeify(context);
 
-            context.setTextWidthResults([10, 15, 101]);
-            var result = memeify.splitLines('super long text', 100);
+            context.setTextWidthResults([10, 15, 101, 15]);
+            var result = memeify.splitLines('super long text something', 100);
 
-            expect(result).toEqual(['super long', 'text']);
+            expect(result).toEqual(['super long', 'text something']);
         });
     });
 
