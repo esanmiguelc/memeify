@@ -13,6 +13,7 @@
   "author": "Emmanuel San Miguel",
   "license": "MIT",
   "devDependencies": {
+    "grunt": "^1.0.1",
     "testem": "^1.6.0"
   }
 }
