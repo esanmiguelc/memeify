@@ -10,9 +10,19 @@ module.exports = function (grunt) {
         dest: 'build.js',
       },
     },
+
+    uglify: {
+      options: {
+        mangle: false
+      },
+      dist: {
+        files: {'build.min.js': ['build.js']}
+      }
+    }
   });
 
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
 
-  grunt.registerTask('default', ['concat']);
+  grunt.registerTask('default', ['concat', 'uglify']);
 }
