@@ -29,7 +29,7 @@ describe('Memeify', function () {
 
             expect(wrapper.getFont()).toBe('48px sans-serif');
         });
-        
+
         it('draws text from top and bottom', function () {
             spyOn(context, 'fillText');
             memeify.createMeme(image, canvas, 'a', 'b');
@@ -43,10 +43,10 @@ describe('Memeify', function () {
             expect(wrapper.getFont()).toBe('44px sans-serif')
         });
 
-        it('only re-sizes up to 16px', function () {
+        it('only re-sizes up to the minimum in options', function () {
             memeify._fitText(canvas, 'super long text', '');
 
-            expect(wrapper.getFont()).toBe('16px sans-serif')
+            expect(wrapper.getFont()).toBe('30px sans-serif')
         });
 
         it('calls fill text for the top text with some padding', function () {
@@ -72,7 +72,7 @@ describe('Memeify', function () {
 
         it('splits into multiple lines', function () {
             spyOn(context, 'fillText');
-            memeify._fitText(canvas, 'super long text', 90);
+            memeify._fitText(canvas, 'super long', 90);
 
             expect(context.fillText).toHaveBeenCalledTimes(2);
         });
@@ -87,7 +87,7 @@ describe('Memeify', function () {
     });
 
     describe('#splitLines', function () {
-        
+
         it('keeps it in one line if it fits in one line', function () {
             var context = new FakeContext();
             var memeify = new Memeify(context);

@@ -26,7 +26,7 @@ Memeify = (function () {
 
     Memeify.prototype._fitText = function (canvas, text, maxWidth, isTop) {
         var options = {
-            'minFontSize': 16,
+            'minFontSize': 30,
             'initialFontSize': 48,
             'maxWidth': maxWidth
         };
