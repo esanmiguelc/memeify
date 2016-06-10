@@ -21,6 +21,6 @@ Install dependencies with [npm](www.npm.org):
 If you want to see the specs you can run `testem` and open up a browser on the specified address
 
 ### Distribuiting
-  Files will be in the out folder.
+  Files will be in the dist directory.
 
     $ grunt
