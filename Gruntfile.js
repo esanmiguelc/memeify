@@ -7,7 +7,7 @@ module.exports = function (grunt) {
       },
       dist: {
         src: ['src/contextWrapper.js', 'src/memeify.js'],
-        dest: 'build.js',
+        dest: 'dist/build.js',
       },
     },
 
@@ -16,7 +16,7 @@ module.exports = function (grunt) {
         mangle: false
       },
       dist: {
-        files: {'build.min.js': ['build.js']}
+        files: {'dist/build.min.js': ['dist/build.js']}
       }
     }
   });

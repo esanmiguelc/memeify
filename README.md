@@ -8,12 +8,19 @@
 
 Clone the repository: `git@github.com:esanmiguelc/memeify.git`
 
-cd into it: `cd memeify`
+    cd memeify
 
-Install dependencies with [npm](www.npm.org): `npm install`
+Install dependencies with [npm](www.npm.org):
+
+    $ npm install
 
 #### To run the tests
 
-    testem ci
-    
+    $ testem ci
+
 If you want to see the specs you can run `testem` and open up a browser on the specified address
+
+### Distribuiting
+  Files will be in the out folder.
+
+    $ grunt
