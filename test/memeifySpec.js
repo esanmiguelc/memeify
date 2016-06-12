@@ -28,7 +28,7 @@
       it('sets the font size and style', function () {
         memeify.createMeme(image, canvas, '', '');
 
-        expect(wrapper.getFont()).toBe('48px sans-serif');
+        expect(wrapper.getFont()).toBe('bold 48px sans-serif');
       });
 
       it('draws text from top and bottom', function () {
@@ -41,13 +41,13 @@
       it('re-sizes the font if text is too big', function () {
         memeify._fitText(canvas, 'hellii', 90, true);
 
-        expect(wrapper.getFont()).toBe('44px sans-serif');
+        expect(wrapper.getFont()).toBe('bold 38px sans-serif');
       });
 
       it('only re-sizes up to the minimum in options', function () {
         memeify._fitText(canvas, 'super long text', '');
 
-        expect(wrapper.getFont()).toBe('30px sans-serif');
+        expect(wrapper.getFont()).toBe('bold 30px sans-serif');
       });
 
       it('calls fill text for the top text with some padding', function () {

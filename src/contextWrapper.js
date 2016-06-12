@@ -15,12 +15,12 @@ var ContextWrapper = (function () {
   };
 
   ContextWrapper.prototype.setFont = function (fontSize, fontFamily) {
-    this.context.font = fontSize + "px " + fontFamily;
+    this.context.font = "bolder " + fontSize + "px " + fontFamily;
   };
 
   ContextWrapper.prototype.drawText = function (text, x, y) {
     this.context.shadowColor='black';
-    this.context.shadowBlur=7;
+    this.context.shadowBlur=10;
     this.context.fillText(text, x, y);
   };
 
