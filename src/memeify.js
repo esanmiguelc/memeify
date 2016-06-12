@@ -1,7 +1,5 @@
+var Memeify = (function () {
 'use strict';
-var Memeify;
-
-Memeify = (function () {
 
     function Memeify(context, canvas) {
         this.context = context;
@@ -73,7 +71,7 @@ Memeify = (function () {
     };
 
     Memeify.prototype._pushSplitLine = function (result, line) {
-        if (line != "") {
+        if (line !== "") {
             result.push(line.trim());
         }
     };
@@ -82,7 +80,7 @@ Memeify = (function () {
         for (var i = 0; i < rows.length; i++) {
             var currentRow = rows[i];
             var center = this.getCenter(width, currentRow);
-            if (i == 0) {
+            if (i === 0) {
                 this.context.drawText(currentRow, center, fontSize);
             } else {
                 this.context.drawText(currentRow, center, (fontSize * (i + 1)));

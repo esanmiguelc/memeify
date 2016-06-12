@@ -1,6 +1,14 @@
 module.exports = function (grunt) {
 
   grunt.initConfig({
+
+    jshint: {
+      options: {
+        jshintrc: true
+      },
+      all: ['src/**/*.js', 'test/**/*.js']
+    },
+
     concat: {
       options: {
         separator: ';',
@@ -23,6 +31,7 @@ module.exports = function (grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
 
-  grunt.registerTask('default', ['concat', 'uglify']);
+  grunt.registerTask('default', ['jshint', 'concat', 'uglify']);
 }

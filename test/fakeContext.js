@@ -1,7 +1,5 @@
-'use strict';
-var FakeContext;
-
-FakeContext = (function () {
+var FakeContext = (function () {
+  'use strict';
 
     FakeContext = function () {
         this.widthResults = [];

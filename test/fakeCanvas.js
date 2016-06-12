@@ -1,7 +1,5 @@
+var FakeCanvas = (function() {
 'use strict';
-var FakeCanvas;
-
-FakeCanvas = (function() {
 
   function FakeCanvas() {
     this.width = 0;

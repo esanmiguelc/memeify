@@ -1,0 +1,15 @@
+{
+  "globals": {
+    "describe": true,
+    "it": true,
+    "expect": true,
+    "FakeContext": true,
+    "jasmine": true,
+    "spyOn": true,
+    "beforeEach": true,
+    "Memeify": true,
+    "document": true,
+    "ContextWrapper": true,
+    "Image": true
+  }
+}
