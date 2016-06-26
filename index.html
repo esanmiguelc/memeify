@@ -1,36 +1,54 @@
 <html>
-<body>
+  <head>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
 
-<canvas width="300" height="300" id="canvas">
-</canvas>
+    <form action='POST'>
+      <input type="text" id="topText" placeholder="Top Text">
+      <input type="text" id="bottomText" placeholder="Bottom Text">
+      <input type="button" id="save" value="save">
+    </form>
 
-<input type="text" id="topText" placeholder="Top Text">
-<input type="text" id="bottomText" placeholder="Bottom Text">
-<input type="button" id="save" value="save">
+    <script src="dist/build.min.js"></script>
+    <script>
+      "use strict";
 
-<script src="dist/build.min.js"></script>
-<script>
-    "use strict";
-
-    var image = new Image();
-    image.src = 'https://cdn.meme.am/images/300x/3291562.jpg';
-    image.onload = function () {
+      var image = new Image();
+      image.onload = function () {
         var canvas = document.getElementById("canvas");
         var topText = document.getElementById("topText");
         var bottomText = document.getElementById("bottomText");
+        canvas.width = image.width;
+        canvas.height = image.height;
         var memeify = Memeify.newInstance(canvas);
-        memeify.createMeme(image, canvas, topText.value, bottomText.value);
+        var options = {
+          image: image,
+          canvas: canvas,
+          topText: topText.value,
+          bottomText: bottomText.value,
+          watermark: 'watermark'
+        }
+        memeify.createMeme(options);
         [topText, bottomText].forEach(function (element) {
-            element.onkeyup = function () {
-                memeify.createMeme(image, canvas, topText.value, bottomText.value);
+          element.onkeyup = function () {
+            var options = {
+              image: image,
+              canvas: canvas,
+              topText: topText.value,
+              bottomText: bottomText.value,
+              watermark: 'watermark'
             }
+            memeify.createMeme(options);
+          }
         });
-    };
+      };
+      image.src = 'http://i.memeify.io/one-does-not-simply-0.jpg';
 
-    var save = document.getElementById('save');
-    save.onclick = function() {
+      var save = document.getElementById('save');
+      save.onclick = function() {
         canvas.toDataURL("image/jpeg", 1.0);
-    };
-</script>
-</body>
+      };
+    </script>
+  </body>
 </html>

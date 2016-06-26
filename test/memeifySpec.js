@@ -26,14 +26,26 @@
       });
 
       it('sets the font size and style', function () {
-        memeify.createMeme(image, canvas, '', '');
+        var options = {
+          image: image,
+          canvas: canvas,
+          topText: '',
+          bottomText: ''
+        };
+        memeify.createMeme(options);
 
         expect(wrapper.getFont()).toBe('bold 48px sans-serif');
       });
 
       it('draws text from top and bottom', function () {
+        var options = {
+          image: image,
+          canvas: canvas,
+          topText: 'a',
+          bottomText: 'b'
+        };
         spyOn(context, 'fillText');
-        memeify.createMeme(image, canvas, 'a', 'b');
+        memeify.createMeme(options);
 
         expect(context.fillText).toHaveBeenCalledTimes(2);
       });
@@ -51,24 +63,34 @@
       });
 
       it('calls fill text for the top text with some padding', function () {
+        var options = {
+          image: image,
+          canvas: canvas,
+          topText: 'text',
+          bottomText: ''
+        };
         spyOn(wrapper, 'drawText');
-        var topText = "text";
-        memeify.createMeme(image, canvas, topText, '');
+        memeify.createMeme(options);
 
         expect(wrapper.drawText)
-          .toHaveBeenCalledWith(topText, jasmine.any(Number), 48);
+          .toHaveBeenCalledWith(options.topText, jasmine.any(Number), 48);
       });
 
       it('centers the text', function () {
+        var options = {
+          image: image,
+          canvas: canvas,
+          topText: 'text',
+          bottomText: ''
+        };
         spyOn(context, 'fillText');
         var fakeMeasure = jasmine.createSpy('context');
         spyOn(context, 'measureText').and.returnValue(fakeMeasure);
         fakeMeasure.width = 50;
-        var topText = "text";
 
-        memeify.createMeme(image, canvas, topText, '');
+        memeify.createMeme(options);
 
-        expect(context.fillText).toHaveBeenCalledWith(topText, 25, jasmine.any(Number));
+        expect(context.fillText).toHaveBeenCalledWith(options.topText, 25, jasmine.any(Number));
       });
 
       it('splits into multiple lines', function () {
@@ -79,9 +101,15 @@
       });
 
       it('sets the image', function () {
+        var options = {
+          image: image,
+          canvas: canvas,
+          topText: '',
+          bottomText: ''
+        };
         spyOn(context, 'drawImage');
 
-        memeify.createMeme(image, canvas, '', '');
+        memeify.createMeme(options);
 
         expect(context.drawImage).toHaveBeenCalledWith(jasmine.any(Image), 0, 0);
       });

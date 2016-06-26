@@ -12,7 +12,12 @@ var Memeify = (function () {
         return new Memeify(this.context);
     };
 
-    Memeify.prototype.createMeme = function (image, canvas, topText, bottomText) {
+    Memeify.prototype.createMeme = function (options) {
+        var image = options.image;
+        var canvas = options.canvas;
+        var topText = options.topText;
+        var bottomText = options.bottomText;
+        var watermark = options.watermark;
         var maxWidth = (canvas.width * 0.90);
         this.context.setFont(48, 'sans-serif');
         this.context.setFontColor("white");
@@ -20,6 +25,14 @@ var Memeify = (function () {
 
         this._fitText(canvas, topText, maxWidth, true);
         this._fitText(canvas, bottomText, maxWidth, false);
+        if (typeof watermark !== "undefined") {
+          this._placeWatermark(canvas, watermark);
+        }
+    };
+
+    Memeify.prototype._placeWatermark = function (canvas, watermark) {
+      this.context.setFont(13, 'sans-serif');
+      this.context.drawText(watermark, canvas.width - this.context.getTextWidth(watermark) - 10, canvas.height - 10);
     };
 
     Memeify.prototype._fitText = function (canvas, text, maxWidth, isTop) {
